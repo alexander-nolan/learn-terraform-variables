@@ -118,10 +118,10 @@ data "aws_availability_zones" "available" {
 #   instance_count     = var.instance_count
 #   instance_type      = var.instance_type
 #   subnet_ids         = module.vpc.private_subnets[*]
-  security_group_ids = [module.app_security_group.this_security_group_id]
+#   security_group_ids = [module.app_security_group.this_security_group_id]
 
-  tags = {
-    project     = "project-alpha",
-    environment = "development"
-  }
-}
+#   tags = {
+#     project     = "project-alpha",
+#     environment = "development"
+#   }
+# }
