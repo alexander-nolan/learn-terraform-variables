@@ -1,10 +1,10 @@
 terraform {
-  cloud {
-    organization = "sudo-cloud-org"
-    workspaces {
-      name = "test-lab11"
-    }
-  }
+  # cloud {
+  #   organization = "sudo-cloud-org"
+  #   workspaces {
+  #     name = "test-lab11"
+  #   }
+  # }
   required_providers {
     aws = {
       source = "hashicorp/aws"
