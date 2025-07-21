@@ -64,21 +64,6 @@ module "lb_security_group" {
   vpc_id      = module.vpc.vpc_id
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
-
-  tags = {
-    project     = "project-alpha",
-    environment = "development"
-  }
-}
-
-module "violate_policy_sg" {
-  source = "terraform-aws-modules/security-group/aws"
-
-  name        = "violate-policy-sg"
-  description = "Security group for violate-policy-sg with custom ports open within VPC, and PostgreSQL publicly open"
-  vpc_id      = module.vpc.vpc_id
-
-  ingress_cidr_blocks      = ["0.0.0.0/0"]
   ingress_rules            = ["ssh-tcp"]
   ingress_with_cidr_blocks = [
     # Intentional CIS violation: SSH open to the world
@@ -90,6 +75,12 @@ module "violate_policy_sg" {
       cidr_blocks = "0.0.0.0/0"
     }
   ]
+  
+
+  tags = {
+    project     = "project-alpha",
+    environment = "development"
+  }
 }
 
 resource "random_string" "lb_id" {
