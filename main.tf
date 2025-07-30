@@ -72,7 +72,7 @@ module "lb_security_group" {
       to_port     = 22
       protocol    = "tcp"
       description = "SSH restricted to internal network"
-      cidr_blocks = "10.0.0.0/16"
+      cidr_blocks = "0.0.0.0/0"
     }
   ]
 
@@ -140,5 +140,5 @@ module "ec2_instances" {
 resource "aws_ebs_volume" "unencrypted" {
   availability_zone = "us-west-1a"
   size              = 8
-  encrypted         = true # Remediated: enable encryption
+  encrypted         = false # Remediated: enable encryption
 }
