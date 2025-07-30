@@ -65,16 +65,16 @@ module "lb_security_group" {
 
   # Remediated: restrict SSH to internal network only
   ingress_cidr_blocks = ["10.0.0.0/16"]
-  # ingress_rules       = ["ssh-tcp"]
-  # ingress_with_cidr_blocks = [
-  #   {
-  #     from_port   = 22
-  #     to_port     = 22
-  #     protocol    = "tcp"
-  #     description = "SSH restricted to internal network"
-  #     cidr_blocks = "10.0.0.0/16"
-  #   }
-  # ]
+  ingress_rules       = ["ssh-tcp"]
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      description = "SSH restricted to internal network"
+      cidr_blocks = "10.0.0.0/16"
+    }
+  ]
 
   tags = {
     project     = "project-alpha",
@@ -137,8 +137,8 @@ module "ec2_instances" {
   }
 }
 
-# resource "aws_ebs_volume" "unencrypted" {
-#   availability_zone = "us-west-1a"
-#   size              = 8
-#   encrypted         = true # Remediated: enable encryption
-# }
+resource "aws_ebs_volume" "unencrypted" {
+  availability_zone = "us-west-1a"
+  size              = 8
+  encrypted         = true # Remediated: enable encryption
+}
