@@ -142,3 +142,9 @@ resource "aws_ebs_volume" "unencrypted" {
   size              = 8
   encrypted         = false # Remediated: enable encryption
 }
+
+module "s3_bucket" {
+  source  = "app.terraform.io/sudo-cloud-org/s3-bucket/aws"
+  version = "1.1.0"
+  bucket_name = "my-bucket"
+}
