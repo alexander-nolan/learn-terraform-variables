@@ -8,6 +8,7 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
+      version = "~> 3.76.0"
     }
   }
 }
@@ -143,8 +144,8 @@ resource "aws_ebs_volume" "unencrypted" {
   encrypted         = false # Remediated: enable encryption
 }
 
-module "s3_bucket" {
-  source  = "app.terraform.io/sudo-cloud-org/s3-bucket/aws"
-  version = "1.0.0"
-  bucket_name = "my-bucket"
-}
+# module "s3_bucket" {
+#   source  = "app.terraform.io/sudo-cloud-org/s3-bucket/aws"
+#   version = "1.0.0"
+#   bucket_name = "my-bucket"
+# }
