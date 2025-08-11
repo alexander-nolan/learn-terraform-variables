@@ -115,26 +115,14 @@ module "elb_http" {
 
 module "ec2_instances" {
   source  = "app.terraform.io/sudo-cloud-org/ec2-instance-tests/aws"
-  version = "1.0.0"
+  version = "1.1.0"
 
   instance_count     = var.instance_count
-  instance_type      = var.instance_type # This will trigger validation error (must be t2.micro)
+  instance_type      = "t2.small"
   subnet_ids         = module.vpc.private_subnets[*]
   security_group_ids = [module.app_security_group.this_security_group_id]
 
   tags = {
     environment = "dev"  # Missing project tag - this will trigger validation error
   }
-}
-
-resource "aws_ebs_volume" "unencrypted" {
-  availability_zone = "us-west-1a"
-  size              = 8
-  encrypted         = false # Remediated: enable encryption
-}
-
-module "s3_bucket" {
-  source  = "app.terraform.io/sudo-cloud-org/s3-bucket/aws"
-  version = "1.0.0"
-  bucket_name = "my-bucket"
 }
