@@ -114,7 +114,8 @@ module "elb_http" {
 }
 
 module "ec2_instances" {
-  source = "./modules/aws-instance"
+  source  = "app.terraform.io/sudo-cloud-org/ec2-instance/aws"
+  version = "1.0.0"
 
   instance_count     = var.instance_count
   instance_type      = var.instance_type
@@ -122,10 +123,9 @@ module "ec2_instances" {
   security_group_ids = [module.app_security_group.this_security_group_id]
 
   tags = {
-    project     = "project-alpha",
+    project     = "project-alpha"
     environment = "dev"
   }
-
 }
 
 resource "aws_ebs_volume" "unencrypted" {
