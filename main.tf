@@ -114,17 +114,16 @@ module "elb_http" {
 }
 
 module "ec2_instances" {
-  source  = "app.terraform.io/sudo-cloud-org/ec2-instance-tests/aws"
+  source  = "app.terraform.io/<Your-Org>/ec2-instance-tests/aws"
   version = "1.0.0"
 
   instance_count     = var.instance_count
-  instance_type      = var.instance_type
+  instance_type      = "t3.large"  # This will trigger validation error (must be t2.micro)
   subnet_ids         = module.vpc.private_subnets[*]
   security_group_ids = [module.app_security_group.this_security_group_id]
 
   tags = {
-    project     = "project-alpha"
-    environment = "dev"
+    environment = "dev"  # Missing project tag - this will trigger validation error
   }
 }
 

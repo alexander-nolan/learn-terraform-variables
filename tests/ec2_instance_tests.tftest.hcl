@@ -22,3 +22,23 @@ run "test_ec2_instance_count" {
     error_message = "Should create exactly 2 EC2 instances"
   }
 }
+
+run "validate_ec2_instance_tags" {
+  command = plan
+
+  variables {
+    instance_count = 2
+    instance_type  = "t2.micro"
+    subnet_ids     = ["subnet-12345", "subnet-67890"]
+    security_group_ids = ["sg-12345"]
+    tags = {
+      environment = "dev"
+    }
+  }
+
+  # Test that instances have project tag
+  assert {
+    condition     = alltrue([for instance in aws_instance.app : contains(keys(instance.tags), "project")])
+    error_message = "All EC2 instances must have project tag"
+  }
+}
