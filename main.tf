@@ -118,7 +118,7 @@ module "ec2_instances" {
   version = "1.0.0"
 
   instance_count     = var.instance_count
-  instance_type      = "t3.large"  # This will trigger validation error (must be t2.micro)
+  instance_type      = var.instance_type # This will trigger validation error (must be t2.micro)
   subnet_ids         = module.vpc.private_subnets[*]
   security_group_ids = [module.app_security_group.this_security_group_id]
 
