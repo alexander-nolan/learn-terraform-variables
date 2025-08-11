@@ -118,11 +118,12 @@ module "ec2_instances" {
   version = "1.1.0"
 
   instance_count     = var.instance_count
-  instance_type      = "t2.small"
+  instance_type      = "t2.micro"
   subnet_ids         = module.vpc.private_subnets[*]
   security_group_ids = [module.app_security_group.this_security_group_id]
 
   tags = {
-    environment = "dev"  # Missing project tag - this will trigger validation error
+    environment = "dev"
+    project     = "project-alpha"
   }
 }
