@@ -1,10 +1,10 @@
 terraform {
-  # cloud {
-  #   organization = "sudo-cloud-org"
-  #   workspaces {
-  #     name = "policy-dev-an"
-  #   }
-  # }
+  cloud {
+    organization = "sudo-cloud-org"
+    workspaces {
+      name = "policy-dev-an"
+    }
+  }
   required_providers {
     aws = {
       source = "hashicorp/aws"
@@ -48,11 +48,11 @@ module "app_security_group" {
   description = "Security group for web-servers with HTTP ports open within VPC"
   vpc_id      = module.vpc.vpc_id
 
-  ingress_cidr_blocks = ["0.0.0.0/0"] # Intentional violation: allows SSH from anywhere
+  ingress_cidr_blocks = module.vpc.public_subnets_cidr_blocks
 
   tags = {
     project     = "project-alpha",
-    environment = "development"
+    environment = "dev"
   }
 }
 
@@ -64,22 +64,11 @@ module "lb_security_group" {
   description = "Security group for load balancer with HTTP ports open within VPC"
   vpc_id      = module.vpc.vpc_id
 
-  # Remediated: restrict SSH to internal network only
-  ingress_cidr_blocks = ["10.0.0.0/16"]
-  ingress_rules       = ["ssh-tcp"]
-  ingress_with_cidr_blocks = [
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      description = "SSH restricted to internal network"
-      cidr_blocks = "0.0.0.0/0"
-    }
-  ]
+  ingress_cidr_blocks = ["0.0.0.0/0"]
 
   tags = {
     project     = "project-alpha",
-    environment = "development"
+    environment = "dev"
   }
 }
 
@@ -120,7 +109,7 @@ module "elb_http" {
 
   tags = {
     project     = "project-alpha",
-    environment = "development"
+    environment = "dev"
   }
 }
 
@@ -134,8 +123,9 @@ module "ec2_instances" {
 
   tags = {
     project     = "project-alpha",
-    environment = "development"
+    environment = "dev"
   }
+
 }
 
 resource "aws_ebs_volume" "unencrypted" {
@@ -144,8 +134,8 @@ resource "aws_ebs_volume" "unencrypted" {
   encrypted         = false # Remediated: enable encryption
 }
 
-# module "s3_bucket" {
-#   source  = "app.terraform.io/sudo-cloud-org/s3-bucket/aws"
-#   version = "1.0.0"
-#   bucket_name = "my-bucket"
-# }
+module "s3_bucket" {
+  source  = "app.terraform.io/sudo-cloud-org/s3-bucket/aws"
+  version = "1.0.0"
+  bucket_name = "my-bucket"
+}
