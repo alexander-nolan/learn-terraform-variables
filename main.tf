@@ -29,7 +29,7 @@ provider "vault" {
 }
 
 data "vault_kv_secret_v2" "aws_creds" {
-  mount = "kv-an"
+  mount = "kv"
   name  = "aws/credentials"
 }
 
