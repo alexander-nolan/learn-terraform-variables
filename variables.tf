@@ -8,3 +8,9 @@ variable "instance_count" {
   description = "Number of EC2 instances to create"
   type        = number
 }
+
+variable "vault_token" {
+  description = "Vault admin token"
+  type        = string
+  sensitive   = true
+}
