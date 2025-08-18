@@ -130,8 +130,8 @@ module "elb_http" {
 }
 
 module "ec2_instances" {
-  source  = "app.terraform.io/sudo-cloud-org/ec2-instance-tests/aws"
-  version = "1.1.0"
+  source  = "app.terraform.io/sudo-cloud-org/ec2-instance-tests-an/aws"
+  version = "1.0.0"
 
   instance_count     = var.instance_count
   instance_type      = "t2.micro"
