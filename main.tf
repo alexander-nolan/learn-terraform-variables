@@ -10,28 +10,28 @@ terraform {
       source = "hashicorp/aws"
       version = "~> 3.76.0"
     }
-    vault = {
-      source  = "hashicorp/vault"
-      version = "~> 4.0"
-    }
+    # vault = {
+    #   source  = "hashicorp/vault"
+    #   version = "~> 4.0"
+    # }
   }
 }
 
 provider "aws" {
   region     = "us-west-1"
-  access_key = data.vault_kv_secret_v2.aws_creds.data["access_key_id"]
-  secret_key = data.vault_kv_secret_v2.aws_creds.data["secret_access_key"]
+  # access_key = data.vault_kv_secret_v2.aws_creds.data["access_key_id"]
+  # secret_key = data.vault_kv_secret_v2.aws_creds.data["secret_access_key"]
 }
 
-provider "vault" {
-  address = "https://vault-cluster-an-public-vault-08643d6d.6e35a6cf.z1.hashicorp.cloud:8200"
-  token   = var.vault_token
-}
+# provider "vault" {
+#   address = "https://vault-cluster-an-public-vault-08643d6d.6e35a6cf.z1.hashicorp.cloud:8200"
+#   token   = var.vault_token
+# }
 
-data "vault_kv_secret_v2" "aws_creds" {
-  mount = "kv-an"
-  name  = "aws/credentials"
-}
+# data "vault_kv_secret_v2" "aws_creds" {
+#   mount = "kv-an"
+#   name  = "aws/credentials"
+# }
 
 data "aws_availability_zones" "available" {
   state = "available"
