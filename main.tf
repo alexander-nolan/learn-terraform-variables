@@ -24,12 +24,12 @@ provider "aws" {
 }
 
 provider "vault" {
-  address = "https://vault-cluster-awn-public-vault-6fb77059.d84fa68f.z1.hashicorp.cloud:8200"
+  address = "https://vault-cluster-ant1-public-vault-ce901197.f55e7563.z1.hashicorp.cloud:8200"
   token   = var.vault_token
 }
 
 data "vault_kv_secret_v2" "aws_creds" {
-  mount = "kv-awn"
+  mount = "kv-ant1"
   name  = "aws/credentials"
 }
 
