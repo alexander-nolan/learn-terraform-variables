@@ -143,3 +143,8 @@ module "ec2_instances" {
     project     = "project-alpha"
   }
 }
+
+resource "aws_s3_bucket" "test_bucket" {
+  bucket = "hcp-vault-test-ant1"
+  force_destroy = true
+}
